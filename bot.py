@@ -76,6 +76,6 @@ def build():
     return app
 
 
-if name == "main":
+if __name__ == "main":
     app = build()
     app.run_polling()
