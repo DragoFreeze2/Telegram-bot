@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS group_members (
     PRIMARY KEY(group_name, member_id)
 );
 """)
-_conn.commit())
+_conn.commit()
 
 def preload_members():
     for raw, disp in MEMBERS.items():
