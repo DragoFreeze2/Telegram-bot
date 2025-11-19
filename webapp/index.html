@@ -3,38 +3,55 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Tag Groups — Mini App</title>
+  <title>Tag Groups — Arena</title>
   <link rel="stylesheet" href="/webapp/style.css" />
 </head>
 <body>
   <div id="app">
-    <header>
-      <h1>Tag Groups</h1>
-      <p id="info">Loading...</p>
+    <header class="topbar">
+      <div class="logo">🏷️ Arena</div>
+      <div id="status" class="status">Loading...</div>
     </header>
 
-    <main>
-      <section id="groups" class="card">
-        <h2>Your Groups</h2>
-        <div id="group-list" class="list"></div>
+    <main class="container">
+      <section class="card groups-card">
+        <h2>Groups</h2>
+        <div id="group-list" class="group-list"></div>
       </section>
 
-      <section id="group-panel" class="card hidden">
-        <div class="panel-header">
-          <h2 id="group-title">Group</h2>
-          <button id="backBtn" class="btn small">Back</button>
+      <section id="panel" class="card panel hidden">
+        <div class="panel-head">
+          <div>
+            <button id="backBtn" class="ghost">←</button>
+            <h2 id="group-title">Group</h2>
+          </div>
+          <div class="panel-actions">
+            <button id="refreshBtn" class="ghost">⟳</button>
+          </div>
         </div>
 
-        <div id="taggroups-list" class="list"></div>
+        <div id="taggroups-list" class="taggroups-list"></div>
 
-        <div class="separator"></div>
+        <div class="divider"></div>
 
         <div class="create-area">
-          <h3>Create new tag group</h3>
-          <input id="tg-name" placeholder="Tag group name" />
+          <div class="create-head">
+            <input id="tg-name" class="input" placeholder="Tag group name (e.g. admins)" />
+            <div class="controls">
+              <button id="selectAllBtn" class="btn small">Select all</button>
+              <button id="createTgBtn" class="btn primary">Create</button>
+            </div>
+          </div>
+
           <div id="members-list" class="members-grid"></div>
-          <div class="row">
-            <button id="selectAllBtn" class="btn">Select all</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/webapp/app.js"></script>
+</body>
+</html>            <button id="selectAllBtn" class="btn">Select all</button>
             <button id="createTgBtn" class="btn primary">Create</button>
           </div>
         </div>
