@@ -1,19 +1,47 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <title>Mini App</title>
-    <link rel="stylesheet" href="/webapp/style.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tag Groups — Mini App</title>
+  <link rel="stylesheet" href="/webapp/style.css" />
 </head>
 <body>
-    <div id="app">
-        <h1>Telegram Mini App</h1>
+  <div id="app">
+    <header>
+      <h1>Tag Groups</h1>
+      <p id="info">Loading...</p>
+    </header>
 
-        <button id="loadMembersBtn">Load Members</button>
+    <main>
+      <section id="groups" class="card">
+        <h2>Your Groups</h2>
+        <div id="group-list" class="list"></div>
+      </section>
 
-        <div id="membersList"></div>
-    </div>
+      <section id="group-panel" class="card hidden">
+        <div class="panel-header">
+          <h2 id="group-title">Group</h2>
+          <button id="backBtn" class="btn small">Back</button>
+        </div>
 
-    <script src="/webapp/app.js"></script>
+        <div id="taggroups-list" class="list"></div>
+
+        <div class="separator"></div>
+
+        <div class="create-area">
+          <h3>Create new tag group</h3>
+          <input id="tg-name" placeholder="Tag group name" />
+          <div id="members-list" class="members-grid"></div>
+          <div class="row">
+            <button id="selectAllBtn" class="btn">Select all</button>
+            <button id="createTgBtn" class="btn primary">Create</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/webapp/app.js"></script>
 </body>
-</html> 
+</html>
