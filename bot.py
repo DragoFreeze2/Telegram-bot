@@ -241,11 +241,11 @@ def main():
 
     print("Bot running with webhook...")
     app.run_webhook(
-        listen="0.0.0.0",
-        port=int(os.getenv("PORT", 8080)),
-        url_path="",  # optional
-        webhook_url=webhook_url,
-    )
+    listen="0.0.0.0",
+    port=int(os.getenv("PORT", 8080)),
+    url_path=os.getenv("TOKEN"),
+    webhook_url=f"{os.getenv('WEBHOOK_URL')}/{os.getenv('TOKEN')}",
+)
 
 if __name__ == "__main__":
     main()
