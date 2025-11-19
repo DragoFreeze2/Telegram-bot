@@ -3,7 +3,7 @@ from flask import Flask, request
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
 
-TOKEN = os.getenv("BOT_TOKEN")  # Loaded from Railway variables
+TOKEN = os.getenv("TOKEN")  # Loaded from Railway variables
 
 app = Flask(__name__)
 
