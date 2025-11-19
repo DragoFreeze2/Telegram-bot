@@ -1,9 +1,6 @@
-# Telegram Tag Group Bot – GitHub‑Optimized Version
-# Structure-ready, clean, modular, documented
+# Telegram Tag Group Bot – Webhook Version (Railway-Ready)
 # python-telegram-bot v20+
-# start the webapp and give it accessors to the current in-memory data
-from webapp_server import start_webapp
-start_webapp(lambda: GROUP_MEMBERS, lambda: TAG_GROUPS)
+
 import os
 import logging
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
@@ -12,24 +9,27 @@ from telegram.ext import (
     CommandHandler,
     CallbackQueryHandler,
     MessageHandler,
-    filters,
     ContextTypes,
+    filters,
 )
+from webapp_server import start_webapp
 
 # ----------------------------------------------------------------------------------
-# DATA STORAGE (In-memory) — Replace this with a DB (Mongo / PostgreSQL etc.) later
+# DATA STORAGE
 # ----------------------------------------------------------------------------------
 USER_STATE = {}            # {user_id: {step, temp}}
 GROUP_MEMBERS = {}         # {chat_id: [(user_id, name)]}
 TAG_GROUPS = {}            # {chat_id: {tag_name: [user_ids]}}
 TEMP_SELECTION = {}        # {user_id: set(selected_ids)}
 
+# Start webapp & pass accessors
+start_webapp(lambda: GROUP_MEMBERS, lambda: TAG_GROUPS)
+
 # ----------------------------------------------------------------------------------
 # HELPERS
 # ----------------------------------------------------------------------------------
 def get_user_state(user_id):
     return USER_STATE.setdefault(user_id, {"step": None, "temp": {}})
-
 
 # ----------------------------------------------------------------------------------
 # /start (DM ONLY)
@@ -47,7 +47,6 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "Add me to a group first, then press Start.",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
-
 
 # ----------------------------------------------------------------------------------
 # CALLBACK HANDLER
@@ -179,7 +178,6 @@ async def callback_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-
 # ----------------------------------------------------------------------------------
 # TEXT HANDLER
 # ----------------------------------------------------------------------------------
@@ -215,25 +213,39 @@ async def message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 await update.message.reply_html(mentions)
                 return
 
-
 # ----------------------------------------------------------------------------------
-# BOT LAUNCH
+# BOT LAUNCH — WEBHOOK MODE
 # ----------------------------------------------------------------------------------
+async def set_webhook(app):
+    webhook_url = os.getenv("WEBHOOK_URL")
+    await app.bot.set_webhook(webhook_url)
 
 def main():
     token = os.getenv("TOKEN")
+    webhook_url = os.getenv("WEBHOOK_URL")
+
     if not token:
         raise RuntimeError("TOKEN environment variable missing.")
+    if not webhook_url:
+        raise RuntimeError("WEBHOOK_URL environment variable missing.")
 
     app = ApplicationBuilder().token(token).build()
 
+    # handlers
     app.add_handler(CommandHandler("start", start))
     app.add_handler(CallbackQueryHandler(callback_handler))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, message_handler))
 
-    print("Bot running...")
-    app.run_polling()
+    # set webhook at startup
+    app.post_init = set_webhook
 
+    print("Bot running with webhook...")
+    app.run_webhook(
+        listen="0.0.0.0",
+        port=int(os.getenv("PORT", 8080)),
+        url_path="",  # optional
+        webhook_url=webhook_url,
+    )
 
 if __name__ == "__main__":
     main()
