@@ -1,0 +1,32 @@
+body {
+    background: #0d1117;
+    color: white;
+    font-family: Arial;
+    margin: 0;
+    padding: 20px;
+}
+
+#app {
+    max-width: 500px;
+    margin: auto;
+    background: #161b22;
+    padding: 20px;
+    border-radius: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    font-size: 18px;
+    background: #238636;
+    border: none;
+    border-radius: 10px;
+    color: white;
+}
+
+.member {
+    background: #21262d;
+    padding: 12px;
+    border-radius: 10px;
+    margin-top: 8px;
+} 
