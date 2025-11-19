@@ -1,34 +1,114 @@
+/* Gaming-style dark theme with animations */
 :root{
-  --bg: #0b1220;
-  --card: #0f1724;
-  --muted: #94a3b8;
-  --accent: #7c3aed;
-  --accent-2: #16a34a;
+  --bg:#071021;
+  --card:#071827;
+  --muted:#83a0c4;
+  --accent:#8b5cf6;
+  --accent-2:#22c55e;
+  --glow: rgba(139,92,246,0.16);
+  --glass: rgba(255,255,255,0.03);
 }
+
 *{box-sizing:border-box}
-body{margin:0;font-family:Inter, system-ui, Arial;background:var(--bg);color:#e6eef8}
-#app{max-width:920px;margin:18px auto;padding:18px}
-header h1{margin:0;font-size:22px}
-.card{background:var(--card);padding:14px;border-radius:12px;margin-top:12px;box-shadow:0 6px 20px rgba(2,6,23,0.6)}
-.list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.group-btn, .tg-btn{padding:10px 14px;border-radius:10px;border:none;background:#0b1228;color:#fff;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}
-.group-btn:hover, .tg-btn:hover{transform:translateY(-3px);box-shadow:0 8px 18px rgba(2,6,23,0.6)}
+body{
+  margin:0;
+  background: linear-gradient(180deg,#02040a 0%, #071021 100%);
+  color:#e6eef8;
+  font-family: Inter, system-ui, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:14px 18px;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  background: linear-gradient(180deg, rgba(255,255,255,0.012), transparent);
+  backdrop-filter: blur(6px);
+}
+.logo{font-weight:700; font-size:16px; letter-spacing:0.6px}
+.status{opacity:.8; font-size:13px}
+
+/* Layout */
+.container{max-width:980px;margin:18px auto;padding:12px}
+.card{background:linear-gradient(180deg, rgba(255,255,255,0.012), rgba(255,255,255,0.006)); padding:14px;border-radius:12px;margin-bottom:14px; box-shadow: 0 10px 30px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.02);}
+.groups-card{display:block}
+.group-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+
+/* group button */
+.group-btn{
+  background: linear-gradient(135deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02));
+  padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);
+  color:#cfe6ff;cursor:pointer;
+  font-weight:600; transition: transform .16s cubic-bezier(.2,.9,.2,1), box-shadow .16s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+}
+.group-btn:hover{ transform: translateY(-6px); box-shadow:0 18px 50px rgba(139,92,246,0.06)}
+.group-btn:active{ transform: translateY(-2px) }
+
+/* panel */
+.panel-head{display:flex;justify-content:space-between;align-items:center}
+.panel-actions{display:flex;gap:8px}
 .hidden{display:none}
-.panel-header{display:flex;justify-content:space-between;align-items:center}
-.btn{padding:8px 12px;border-radius:8px;border:none;background:#111827;color:#fff;cursor:pointer}
-.btn.small{padding:6px 8px;font-size:12px}
-.btn.primary{background:var(--accent);color:white}
-.separator{height:1px;background:rgba(255,255,255,0.03);margin:12px 0;border-radius:2px}
+.divider{height:1px;background:rgba(255,255,255,0.02);margin:12px 0;border-radius:2px}
 
-/* Members grid */
-.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px;margin-top:10px}
-.member-card{background:#081226;padding:10px;border-radius:10px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}
-.member-card:hover{transform:translateY(-4px)}
-.member-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:600}
-.member-name{flex:1}
-.checkmark{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;transition:all .2s ease;opacity:0;transform:scale(.6)}
-.member-card.selected{box-shadow:0 10px 30px rgba(2,6,23,0.6);transform:scale(1.02)}
-.member-card.selected .checkmark{opacity:1;transform:scale(1);background:var(--accent-2);color:#04260f}
+/* create area */
+.create-head{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.input{flex:1;padding:10px;border-radius:10px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit}
+.controls{display:flex;gap:8px}
+.btn{padding:8px 12px;border-radius:10px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+.btn.small{padding:8px 10px;font-size:13px}
+.btn.primary{background: linear-gradient(90deg,var(--accent), #06b6d4); color:white; font-weight:700; box-shadow:0 10px 30px rgba(139,92,246,0.08)}
 
-/* nice small responsive tweaks */
-@media (max-width:520px){ .members-grid{grid-template-columns:repeat(2,1fr)} }
+/* members grid */
+.members-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:10px}
+.member-card{
+  position:relative; overflow:hidden;
+  display:flex;align-items:center;gap:12px;padding:10px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+  border:1px solid rgba(255,255,255,0.02);
+  cursor:pointer; transition: transform .2s cubic-bezier(.2,.9,.2,1), box-shadow .2s, background .18s;
+  transform-origin:center; will-change:transform, box-shadow;
+}
+.member-card:hover{ transform: translateY(-8px); box-shadow: 0 30px 60px rgba(139,92,246,0.06) }
+
+/* avatar */
+.member-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;background:linear-gradient(135deg,var(--accent),#06b6d4);box-shadow: 0 6px 20px rgba(6,182,212,0.06); color:#021014}
+.member-name{flex:1;font-weight:600}
+
+/* checkmark */
+.checkmark{
+  width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  background: rgba(255,255,255,0.02); color:transparent; font-weight:700; font-size:16px;
+  transition: background .18s, color .12s, transform .18s cubic-bezier(.2,.9,.2,1), opacity .16s;
+  transform: scale(.7);
+  opacity:0;
+  border:1px solid rgba(255,255,255,0.02);
+}
+
+/* selected state */
+.member-card.selected{ background: linear-gradient(90deg, rgba(34,197,94,0.06), rgba(139,92,246,0.04)); box-shadow: 0 30px 80px rgba(34,197,94,0.06); transform: translateY(-4px) scale(1.01) }
+.member-card.selected .checkmark{ opacity:1; color: #0a2f15; background: var(--accent-2); transform: scale(1); }
+
+/* entry animation - sliding from right */
+@keyframes slideIn {
+  from { opacity:0; transform: translateX(24px) scale(.98) }
+  to { opacity:1; transform: translateX(0) scale(1) }
+}
+.member-card{ animation: slideIn .36s cubic-bezier(.2,.9,.2,1) both }
+
+/* ripple effect on click */
+.member-card .ripple {
+  position:absolute; border-radius:50%; transform:scale(0); opacity:0.18;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+  pointer-events:none; transition: transform .6s ease, opacity .6s;
+}
+.member-card:active .ripple{ transform:scale(6); opacity:0; transition: none }
+
+/* taggroups list */
+.tggroup-row{display:flex;justify-content:space-between;align-items:center;padding:8px 6px;border-radius:8px;margin-top:8px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.01)}
+.tggroup-row button{padding:8px 10px;border-radius:8px;border:none;background:transparent;color:var(--muted);cursor:pointer}
+
+/* responsive */
+@media (max-width:520px){ .members-grid{grid-template-columns:repeat(2,1fr)} .member-avatar{width:40px;height:40px} }
