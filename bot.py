@@ -13,7 +13,8 @@ from telegram.ext import (
     filters,
     ContextTypes,
 )
-
+from webapp_server import start_webapp
+start_webapp()
 # ----------------------------------------------------------------------------------
 # DATA STORAGE (In-memory) — Replace this with a DB (Mongo / PostgreSQL etc.) later
 # ----------------------------------------------------------------------------------
