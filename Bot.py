@@ -1,7 +1,9 @@
 # Telegram Tag Group Bot – GitHub‑Optimized Version
 # Structure-ready, clean, modular, documented
 # python-telegram-bot v20+
-
+# start the webapp and give it accessors to the current in-memory data
+from webapp_server import start_webapp
+start_webapp(lambda: GROUP_MEMBERS, lambda: TAG_GROUPS)
 import os
 import logging
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
@@ -13,8 +15,7 @@ from telegram.ext import (
     filters,
     ContextTypes,
 )
-from webapp_server import start_webapp
-start_webapp()
+
 # ----------------------------------------------------------------------------------
 # DATA STORAGE (In-memory) — Replace this with a DB (Mongo / PostgreSQL etc.) later
 # ----------------------------------------------------------------------------------
